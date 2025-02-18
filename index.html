@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планировщик путешествий</title>
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+    <!-- Анимированная заставка -->
+    <div class="intro-animation" id="intro">
+        <div class="globe-container">
+            <div class="globe"></div>
+            <div class="plane"></div>
+        </div>
+        <h1 class="intro-text">Путешествуй<br>Мечтай<br>Исследуй</h1>
+        <button class="start-button" id="startButton">Начать путешествие</button>
+    </div>
+
+    <!-- Основная форма -->
+    <div class="main-container" id="mainContent" style="display: none;">
+        <button class="home-button" onclick="returnToHome()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 12L5 10M5 10L12 3L19 10M5 10V20C5 20.5523 5.44772 21 6 21H9M19 10L21 12M19 10V20C19 20.5523 18.5523 21 18 21H15M9 21C9.55228 21 10 20.5523 10 20V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V20C14 20.5523 14.4477 21 15 21M9 21H15" 
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            На главную
+        </button>
+        <div class="glass-card">
+            <div class="progress-bar">
+                <div class="progress-step active">1</div>
+                <div class="progress-step">2</div>
+                <div class="progress-step">3</div>
+                <div class="progress-step">4</div>
+            </div>
+
+            <form id="travelForm" action="/submit" method="POST">
+                <!-- Шаг 1: Основная информация -->
+                <div class="form-section active" id="section1">
+                    <h2>Когда и куда едем?</h2>
+                    <div class="form-group floating">
+                        <input type="date" name="startDate" required id="startDate">
+                        <label for="startDate">Дата начала</label>
+                    </div>
+                    <div class="form-group floating">
+                        <input type="date" name="endDate" required id="endDate">
+                        <label for="endDate">Дата окончания</label>
+                    </div>
+                    <div class="form-group floating">
+                        <input type="text" name="country" required id="country">
+                        <label for="country">Страна назначения</label>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="next-button" onclick="nextSection(2)">Далее</button>
+                    </div>
+                </div>
+
+                <!-- Шаг 2: Формат отдыха -->
+                <div class="form-section" id="section2">
+                    <h2>Какой формат отдыха предпочитаете?</h2>
+                    <div class="travel-types">
+                        <div class="travel-type-card">
+                            <input type="checkbox" id="active" name="format" value="active">
+                            <label for="active">
+                                <div class="icon-wrapper">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <path d="M12 14.5L11 18.5M12 14.5L13 18.5M12 14.5V9M12 9L9 10M12 9L15 10M7.5 4.5L9 10M16.5 4.5L15 10M8.5 4C8.5 5.38071 9.61929 6.5 11 6.5C12.3807 6.5 13.5 5.38071 13.5 4C13.5 2.61929 12.3807 1.5 11 1.5C9.61929 1.5 8.5 2.61929 8.5 4ZM15.5 4C15.5 5.38071 16.6193 6.5 18 6.5C19.3807 6.5 20.5 5.38071 20.5 4C20.5 2.61929 19.3807 1.5 18 1.5C16.6193 1.5 15.5 2.61929 15.5 4ZM1.5 4C1.5 5.38071 2.61929 6.5 4 6.5C5.38071 6.5 6.5 5.38071 6.5 4C6.5 2.61929 5.38071 1.5 4 1.5C2.61929 1.5 1.5 2.61929 1.5 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span>Активный</span>
+                            </label>
+                        </div>
+                        
+                        <div class="travel-type-card">
+                            <input type="checkbox" id="relaxed" name="format" value="relaxed">
+                            <label for="relaxed">
+                                <div class="icon-wrapper">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span>Спокойный</span>
+                            </label>
+                        </div>
+                        
+                        <div class="travel-type-card">
+                            <input type="checkbox" id="cultural" name="format" value="cultural">
+                            <label for="cultural">
+                                <div class="icon-wrapper">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <path d="M12 8V12M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <span>Культурный</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="back-button" onclick="prevSection(1)">Назад</button>
+                        <button type="button" class="next-button" onclick="nextSection(3)">Далее</button>
+                    </div>
+                </div>
+
+                <!-- Шаг 3: Цели поездки -->
+                <div class="form-section" id="section3">
+                    <h2>Что хотите получить от поездки?</h2>
+                    <div class="checkbox-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="rest" name="goals" value="rest">
+                            <label for="rest">Отдых</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="sightseeing" name="goals" value="sightseeing">
+                            <label for="sightseeing">Достопримечательности</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="nightlife" name="goals" value="nightlife">
+                            <label for="nightlife">Ночная жизнь</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="nature" name="goals" value="nature">
+                            <label for="nature">Природа</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="shopping" name="goals" value="shopping">
+                            <label for="shopping">Шопинг</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="customGoal" placeholder="Или добавьте свой вариант" class="custom-input">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="back-button" onclick="prevSection(2)">Назад</button>
+                        <button type="button" class="next-button" onclick="nextSection(4)">Далее</button>
+                    </div>
+                </div>
+
+                <!-- Шаг 4: Бюджет и дополнительные пожелания -->
+                <div class="form-section" id="section4">
+                    <h2>Бюджет и дополнительные пожелания</h2>
+                    <div class="form-group floating">
+                        <input type="number" name="budget" required id="budget" min="0">
+                        <label for="budget">Бюджет (в рублях)</label>
+                    </div>
+                    <div class="form-group floating">
+                        <textarea name="additionalWishes" id="additionalWishes" rows="4" placeholder="Например: хочу посетить определенные места, попробовать местную кухню, интересуют исторические места..."></textarea>
+                        <label for="additionalWishes">Дополнительные пожелания и предпочтения</label>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="back-button" onclick="prevSection(3)">Назад</button>
+                        <button type="submit" class="generate-button">
+                            <span>Получить маршрут</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M12 5l7 7-7 7M5 12h14"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
