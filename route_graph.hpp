@@ -5,6 +5,16 @@
 #include <limits>
 
 class RouteGraph {
+public:
+    struct Edge {
+        int to;
+        double weight;
+    };
+
+    int getVertexCount() const { return vertices.size(); }
+    double getDistance(int from, int to) const;
+    const std::vector<Edge>& getEdges(int vertex) const { return adjacencyList[vertex]; }
+
 private:
     struct Node {
         std::string place_id;
@@ -16,6 +26,8 @@ private:
     };
 
     std::map<std::string, Node> nodes;
+    std::vector<std::pair<double, double>> vertices;  // координаты вершин
+    std::vector<std::vector<Edge>> adjacencyList;     // список смежности
     
     double calculateDistance(double lat1, double lon1, double lat2, double lon2);
     std::vector<std::string> dijkstra(const std::string& start, const std::string& end);
