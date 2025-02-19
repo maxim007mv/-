@@ -107,10 +107,10 @@ Copyright © 2025 Maxim Lomakin
 
 ## 👥 Автор
 
-- **Maxim Lomakin** - *Разработчик* - [GitHub](https://github.com/username)
+- **Maxim Lomakin** - *Разработчик* - [GitHub]([https://github.com/username](https://github.com/maxim007mv))
 
 ## 📬 Контакты
 
 По вопросам сотрудничества и использования:
-- Email: [email]
-- Telegram: [@username]
+- Email: maviryscompani@internet.ru
+- Telegram: [@Iliydly](https://t.me/Iliydly)
